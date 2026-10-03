@@ -712,9 +712,9 @@
     var letterhead = el("div", { class: "lh" },
       el("img", { src: "assets/logo-navy.png", alt: "" }),
       el("div", { class: "names" },
-        el("div", { class: "ar", text: "جامعة اللوتس" }),
+        el("div", { class: "ar", text: "جامعة اللوتس بالمنيا" }),
         el("div", { class: "en", text: "LOTUS UNIVERSITY IN MINYA" }),
-        el("div", { class: "dep", text: "إدارة رعاية الشباب – الأنشطة الطلابية" })
+        el("div", { class: "dep", text: "تسجيل الأنشطة الطلابية – رعاية الشباب" })
       ),
       el("div", { class: "meta", text: now.toLocaleDateString("en-GB") })
     );
@@ -748,7 +748,7 @@
     }
 
     var footer = el("div", { class: "pf" },
-      el("span", { text: "جامعة اللوتس – إدارة رعاية الشباب" }),
+      el("span", { text: "جامعة اللوتس بالمنيا – تسجيل الأنشطة الطلابية" }),
       el("span", { text: dateStr }),
       el("b", { class: "pf-mark", text: "B.S" })
     );
@@ -765,7 +765,7 @@
     document.head.appendChild(pageStyle);
 
     var img = area.querySelector("img");
-    var go = function () { setTimeout(function () { window.print(); }, 150); };
+    var go = function () { setTimeout(function () { window.print(); }, 200); };
     if (img && img.complete) go(); else if (img) { img.onload = go; img.onerror = go; } else go();
   }
 
@@ -774,7 +774,7 @@
     printReport({
       title: title || "كشف الطلاب المسجلين", subtitle: "إجمالي عدد الطلاب: " + rows.length, orientation: "portrait",
       blocks: [{
-        head: ["#", "الاسم الرباعي", "الكود", "الكلية", "المحافظة", "الموبايل", "الأنشطة", "نوع النشاط", "التاريخ"],
+        head: ["#", "الاسم رباعي للطالب", "الكود", "الكلية", "المحافظة", "الموبايل", "الأنشطة", "نوع النشاط", "التاريخ"],
         ltr: [2, 5],
         rows: rows.map(function (s, i) {
           return [i + 1, s.name, s.code, s.college, s.governorate, s.phone, actText(s), s.activityDetail || "—", fmtDate(s.createdAt)];
@@ -945,19 +945,19 @@
             el("div", { class: "pg-col" },
               el("h2", { class: "sh", text: "توزيع الطلاب حسب كليات الجامعة الـ 8" }),
               el("table", { class: "rep sm" },
-                el("thead", {}, el("tr", {}, ["اسم الكلية", "عدد الطلاب"].map(function (h) { return el("th", { text: h }); }))),
+                el("thead", {}, el("tr", {}, ["اسم الكلية", "العدد", "النسبة"].map(function (h) { return el("th", { text: h }); }))),
                 el("tbody", {}, COLLEGES.map(function (c) {
                   var count = students.filter(function (s) { return s.college === c; }).length;
-                  return el("tr", {}, el("td", { text: c }), el("td", { text: count + " طالب" }));
+                  return el("tr", {}, el("td", { text: c }), el("td", { text: String(count) }), el("td", { text: pct(count, T) }));
                 }))
               )
             ),
             el("div", { class: "pg-col" },
-              el("h2", { class: "sh", text: "توزيع أعداد المشاركين في الأنشطة" }),
+              el("h2", { class: "sh", text: "توزيع المشاركات في الأنشطة" }),
               el("table", { class: "rep sm" },
-                el("thead", {}, el("tr", {}, ["النشاط", "عدد المشاركين"].map(function (h) { return el("th", { text: h }); }))),
+                el("thead", {}, el("tr", {}, ["النشاط", "المشاركون", "النسبة"].map(function (h) { return el("th", { text: h }); }))),
                 el("tbody", {}, actCounts.map(function (pair) {
-                  return el("tr", {}, el("td", { text: pair[0] }), el("td", { text: pair[1] + " طالب" }));
+                  return el("tr", {}, el("td", { text: pair[0] }), el("td", { text: String(pair[1]) }), el("td", { text: pct(pair[1], T) }));
                 }))
               ),
               (hb.length ? el("div", {},

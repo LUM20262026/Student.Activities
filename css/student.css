@@ -58,3 +58,7 @@ fieldset.acts.invalid .tile{border-color:var(--danger)}
   .act .tile svg{width:26px;height:26px}
   .field input,.field select{font-size:16px!important;padding:12px 10px}
 }
+
+@media screen{
+  html,body{background-color:#060a18}
+}

@@ -240,7 +240,7 @@
       var ok = true;
       function bad(f, m) { setErr(f, m); ok = false; }
       ["name","code","college","governorate","phone","activities","detail"].forEach(function (f) { setErr(f, ""); });
-      if (!/^[^ ]+( [^ ]+){3,}$/.test(d.name) || d.name.length < 8) bad("name", "اكتب الاسم رباعيًا (4 أسماء على الأقل)");
+      if (!/^[^ ]+( [^ ]+){3,}$/.test(d.name) || d.name.length < 8) bad("name", "يرجى ادخال الاسم رباعي للطالب (4 أسماء على الأقل)");
       if (!/^[A-Z0-9]{3,20}$/.test(d.code)) bad("code", "كود الطالب غير صحيح (حروف إنجليزية وأرقام فقط)");
       if (COLLEGES.indexOf(d.college) === -1) bad("college", "اختر الكلية من القائمة المتاحة");
       if (GOVERNORATES.indexOf(d.governorate) === -1) bad("governorate", "اختر المحافظة");

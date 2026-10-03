@@ -14,22 +14,37 @@
 
   html, body {
     background: #fff !important;
+    background-color: #fff !important;
     color: #0b0f24 !important;
-    display: block;
-    min-height: 0;
+    color-scheme: light !important;
+    display: block !important;
+    position: static !important;
+    overflow: visible !important;
+    overflow-x: visible !important;
+    overflow-y: visible !important;
+    width: 100% !important;
+    max-width: none !important;
+    height: auto !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 0 !important;
     font-size: 10pt;
   }
-  body * { visibility: hidden; }
+  body * { visibility: hidden !important; }
 
   #printArea, #printArea * {
-    visibility: visible;
+    visibility: visible !important;
   }
 
   #printArea {
-    display: block;
-    position: absolute;
-    inset: 0 0 auto 0;
-    width: 100%;
+    display: block !important;
+    position: absolute !important;
+    top: 0 !important;
+    left: 0 !important;
+    right: 0 !important;
+    width: 100% !important;
+    max-width: 100% !important;
+    overflow: visible !important;
     direction: rtl;
     font-family: "Cairo", "Segoe UI", Tahoma, Arial, sans-serif;
   }
@@ -63,7 +78,7 @@
     justify-content: space-between;
     gap: 16px;
     padding-bottom: 10px;
-    border-bottom: 3px double #16285c;
+    border-bottom: 2px solid #94a3b8;
     margin-bottom: 14px;
   }
   .lh img {
@@ -75,61 +90,62 @@
     flex: 1;
   }
   .lh .names .ar {
-    font-size: 20pt;
+    font-size: 19pt;
     font-weight: 900;
-    color: #16285c;
+    color: #0f172a;
     line-height: 1.15;
     letter-spacing: -0.5px;
   }
   .lh .names .en {
     font-size: 9.5pt;
-    letter-spacing: 0.16em;
-    color: #8a6d1b;
+    letter-spacing: 0.14em;
+    color: #64748b;
     font-weight: 800;
     direction: ltr;
     margin-top: 2px;
   }
   .lh .names .dep {
-    font-size: 11.5pt;
-    color: #222;
+    font-size: 11pt;
+    color: #334155;
     margin-top: 4px;
     font-weight: 700;
-    background: #f7f4ea;
+    background: #f1f5f9;
     display: inline-block;
-    padding: 2px 14px;
+    padding: 3px 14px;
     border-radius: 99px;
-    border: 1px solid #e0d1a4;
+    border: 1px solid #cbd5e1;
   }
   .lh .meta {
     width: 32mm;
     font-size: 8.5pt;
-    color: #444;
+    color: #475569;
     text-align: left;
     direction: ltr;
     line-height: 1.6;
-    border-left: 2px solid #16285c;
+    border-left: 2px solid #94a3b8;
     padding-left: 8px;
   }
 
-  /* عنوان التقرير المميز */
+  /* عنوان التقرير المميز (خلفية رمادي فاتح) */
   .rtitle {
     text-align: center;
     margin: 10px 0 16px;
   }
   .rtitle h1 {
     display: inline-block;
-    font-size: 16pt;
-    color: #fff;
-    background: linear-gradient(135deg, #16285c 0%, #2b4a9a 100%);
+    font-size: 15pt;
+    color: #0f172a !important;
+    background: #eaedf3 !important;
+    border: 1.5px solid #cbd5e1;
     padding: 6px 36px;
     border-radius: 99px;
     font-weight: 800;
-    box-shadow: 0 4px 12px rgba(22, 40, 92, 0.25);
+    box-shadow: none;
   }
   .rtitle p {
     margin-top: 6px;
-    font-size: 10pt;
-    color: #555;
+    font-size: 9.5pt;
+    color: #475569;
     font-weight: 600;
   }
 
@@ -141,59 +157,63 @@
     margin: 10px 0 16px;
   }
   .kv div {
-    border: 1px solid #d4c285;
-    border-radius: 10px;
+    border: 1px solid #cbd5e1;
+    border-radius: 8px;
     padding: 8px 10px;
     text-align: center;
-    background: #fdfbf3;
+    background: #f8fafc;
     break-inside: avoid;
-    box-shadow: inset 0 0 0 1px #fff;
+    box-shadow: none;
   }
   .kv b {
     display: block;
-    font-size: 16pt;
-    color: #16285c;
+    font-size: 15pt;
+    color: #0f172a;
     font-weight: 900;
     line-height: 1.1;
   }
   .kv span {
     font-size: 8.5pt;
-    color: #555;
+    color: #475569;
     font-weight: 600;
   }
 
   /* عناوين الأقسام بالمستند */
   h2.sh {
-    font-size: 12pt;
-    color: #16285c;
-    border-right: 5px solid #b8902f;
-    padding-right: 10px;
-    margin: 16px 0 8px;
+    font-size: 11pt;
+    color: #0f172a;
+    border-right: 4px solid #64748b;
+    padding-right: 8px;
+    margin: 14px 0 8px;
     break-after: avoid;
     font-weight: 800;
   }
 
-  /* جدول التقرير الرسمي (Official Table) */
+  /* جدول التقرير الرسمي (رؤوس الجداول بخلفية رمادي فاتح) */
   table.rep {
     width: 100%;
     border-collapse: collapse;
-    font-size: 8.5pt;
+    font-size: 8pt;
     margin-bottom: 10px;
+    table-layout: auto;
   }
   table.rep th {
-    background: #16285c;
-    color: #fff;
-    padding: 6px 5px;
+    background: #e2e8f0 !important;
+    color: #0f172a !important;
+    padding: 5px 3px;
     text-align: right;
     font-weight: 800;
-    border: 1px solid #16285c;
+    border: 1px solid #94a3b8 !important;
     white-space: nowrap;
+    font-size: 8pt;
   }
   table.rep td {
-    padding: 5px 5px;
-    border: 1px solid #cbd2e1;
+    padding: 4.5px 3.5px;
+    border: 1px solid #cbd5e1;
     vertical-align: middle;
-    word-break: break-word;
+    font-size: 8pt;
+    word-break: normal;
+    color: #1e293b;
   }
   table.rep tbody tr:nth-child(even) td {
     background: #f4f6fc;
@@ -204,6 +224,12 @@
   table.rep thead {
     display: table-header-group;
   }
+  table.rep td:nth-child(1) { text-align: center; width: 18px; }
+  table.rep td:nth-child(2) { min-width: 100px; font-weight: 700; }
+  table.rep td:nth-child(3) { text-align: center; white-space: nowrap; }
+  table.rep td:nth-child(5) { text-align: center; white-space: nowrap; }
+  table.rep td:nth-child(6) { text-align: center; white-space: nowrap; }
+  table.rep td:nth-child(9) { text-align: center; white-space: nowrap; font-size: 7.5pt; }
   /* Single-Page Stats Report Layout */
   .kv5 {
     grid-template-columns: repeat(5, 1fr) !important;
@@ -234,6 +260,9 @@
   table.rep.sm th {
     padding: 4px 5px;
     font-size: 8pt;
+    background: #e2e8f0 !important;
+    color: #0f172a !important;
+    border: 1px solid #94a3b8 !important;
   }
   table.rep.sm td {
     padding: 3.5px 5px;
@@ -241,10 +270,10 @@
   }
   .govs-summary {
     font-size: 7.5pt;
-    color: #222;
+    color: #1e293b;
     padding: 5px 8px;
-    background: #f7f9fd;
-    border: 1px solid #c8d4e9;
+    background: #f1f5f9;
+    border: 1px solid #cbd5e1;
     border-radius: 6px;
     line-height: 1.4;
     font-weight: 600;
@@ -260,16 +289,16 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
-    border-top: 2px solid #b8902f;
+    border-top: 2px solid #cbd5e1;
     margin-top: 14px;
     padding-top: 8px;
     font-size: 8.5pt;
-    color: #444;
+    color: #475569;
   }
   .pf .pf-mark {
     font-weight: 900;
     font-size: 7.5pt;
-    color: #16285c;
+    color: #334155;
     letter-spacing: 0.08em;
   }
 }
