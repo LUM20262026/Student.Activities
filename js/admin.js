@@ -43,8 +43,7 @@
     { key: "social",  label: "نشاط اجتماعي", color: "#f97316", icon: "🤝" }
   ];
 
-  var ADMIN_PASS = "85208520";
-  var AUTH_KEY = "lum_admin_authed";
+
 
   /* ---------- State ---------- */
   var students = [];
@@ -256,10 +255,10 @@
       dbUnsub.off();
       dbUnsub = null;
     }
-    sessionStorage.removeItem(AUTH_KEY);
     students = [];
-    $("app").hidden = true;
-    $("login").hidden = false;
+    if ($("login")) $("login").hidden = false;
+    if ($("app")) $("app").hidden = true;
+    if ($("loginBtn")) $("loginBtn").disabled = false;
   }
 
   function listenData() {
@@ -807,29 +806,61 @@
     if (loginForm) {
       loginForm.addEventListener("submit", function (e) {
         e.preventDefault();
+        var email = $("email") ? $("email").value.trim() : "";
         var pass = $("pass") ? $("pass").value : "";
-        if (pass === ADMIN_PASS) {
-          sessionStorage.setItem(AUTH_KEY, "true");
-          loginMsg("");
-          if ($("pass")) $("pass").value = "";
-          unlockDashboard();
-        } else {
-          loginMsg("كلمة المرور غير صحيحة!");
-          loginForm.classList.remove("shake");
-          void loginForm.offsetWidth;
-          loginForm.classList.add("shake");
+        if (!email || !pass) return loginMsg("يرجى إدخال البريد الإلكتروني وكلمة المرور");
+
+        var loginBtn = $("loginBtn");
+        if (loginBtn) loginBtn.disabled = true;
+        loginMsg("جاري التحقق من الحساب...");
+
+        if (typeof firebase === "undefined" || !firebase.auth) {
+          if (loginBtn) loginBtn.disabled = false;
+          return loginMsg("خدمة المصادقة غير متوفرة حالياً");
         }
+
+        firebase.auth().signInWithEmailAndPassword(email, pass)
+          .then(function () {
+            loginMsg("");
+            if ($("pass")) $("pass").value = "";
+          })
+          .catch(function (err) {
+            if (loginBtn) loginBtn.disabled = false;
+            var m = "بيانات الدخول غير صحيحة";
+            if (err.code === "auth/invalid-email") m = "صيغة البريد الإلكتروني غير صحيحة";
+            else if (err.code === "auth/user-not-found" || err.code === "auth/wrong-password" || err.code === "auth/invalid-credential") m = "البريد الإلكتروني أو كلمة المرور غير صحيحة";
+            else if (err.code === "auth/too-many-requests") m = "تم حظر المحاولات لكثرة الأخطاء، يرجى الانتظار قليلاً";
+            loginMsg(m);
+            loginForm.classList.remove("shake");
+            void loginForm.offsetWidth;
+            loginForm.classList.add("shake");
+          });
       });
     }
 
-    if (sessionStorage.getItem(AUTH_KEY) === "true") {
-      unlockDashboard();
+    if (typeof firebase !== "undefined" && firebase.auth) {
+      firebase.auth().onAuthStateChanged(function (user) {
+        if (user) {
+          unlockDashboard();
+        } else {
+          lockDashboard();
+        }
+      });
     } else {
-      if ($("login")) $("login").hidden = false;
-      if ($("app")) $("app").hidden = true;
+      lockDashboard();
     }
 
-    if ($("btnOut")) $("btnOut").addEventListener("click", lockDashboard);
+    if ($("btnOut")) {
+      $("btnOut").addEventListener("click", function () {
+        if (typeof firebase !== "undefined" && firebase.auth) {
+          firebase.auth().signOut().then(function () {
+            lockDashboard();
+          });
+        } else {
+          lockDashboard();
+        }
+      });
+    }
 
     if ($("mClose")) $("mClose").addEventListener("click", closeModal);
     if ($("modal")) $("modal").addEventListener("click", function (e) { if (e.target === $("modal")) closeModal(); });
