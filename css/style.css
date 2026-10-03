@@ -15,15 +15,16 @@
 }
 *{box-sizing:border-box;margin:0;padding:0}
 [hidden]{display:none!important}
-html{scroll-behavior:smooth}
+html{scroll-behavior:smooth;overflow-x:hidden;touch-action:pan-y;-webkit-overflow-scrolling:touch}
 body{
-  font-family:var(--font);color:var(--text);min-height:100vh;
+  font-family:var(--font);color:var(--text);min-height:100vh;min-height:100dvh;
+  display:flex;flex-direction:column;overflow-x:hidden;overflow-y:auto;
+  touch-action:pan-y;-webkit-overflow-scrolling:touch;
   background:
     radial-gradient(1100px 600px at 85% -10%,rgba(230,195,106,.13),transparent 60%),
     radial-gradient(900px 600px at -10% 110%,rgba(46,196,182,.10),transparent 60%),
     linear-gradient(160deg,var(--bg),var(--bg2));
   background-attachment:fixed;
-  display:flex;flex-direction:column;overflow-x:hidden;
 }
 #bg{position:fixed;inset:0;z-index:0;pointer-events:none}
 main,header.top,footer.credit{position:relative;z-index:1}
@@ -78,8 +79,8 @@ label.lbl{display:block;font-size:.88rem;color:var(--muted);margin-bottom:6px;fo
 .btn.sm{padding:8px 14px;font-size:.88rem;border-radius:10px;box-shadow:none}
 
 /* ---------- toast ---------- */
-#toasts{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:999;display:flex;flex-direction:column;gap:10px;align-items:center}
-.toast{padding:12px 20px;border-radius:12px;background:#10183d;border:1px solid rgba(255,255,255,.15);box-shadow:0 12px 40px rgba(0,0,0,.5);animation:toastIn .4s cubic-bezier(.2,.9,.3,1.3);font-weight:600}
+#toasts{position:fixed;top:18px;left:50%;transform:translateX(-50%);z-index:999;display:flex;flex-direction:column;gap:10px;align-items:center;pointer-events:none}
+.toast{padding:12px 20px;border-radius:12px;background:#10183d;border:1px solid rgba(255,255,255,.15);box-shadow:0 12px 40px rgba(0,0,0,.5);animation:toastIn .4s cubic-bezier(.2,.9,.3,1.3);font-weight:600;pointer-events:auto}
 .toast.ok{border-color:var(--ok)}
 .toast.bad{border-color:var(--danger)}
 @keyframes toastIn{from{opacity:0;transform:translateY(-14px) scale(.95)}to{opacity:1;transform:none}}
