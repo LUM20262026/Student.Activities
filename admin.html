@@ -1,0 +1,295 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>لوحة التحكم الإدارية الفاخرة | جامعة اللوتس</title>
+<meta name="robots" content="noindex,nofollow,noarchive">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#070b19">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https: wss: data: blob:;">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@300;400;500;600;700;800;900&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/admin.css">
+<link rel="stylesheet" href="css/print.css">
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div id="toasts" role="status" aria-live="polite"></div>
+
+<!-- ============ شاشة تسجيل الدخول الإدارية ============ -->
+<main id="login" class="login-wrap">
+  <form id="loginForm" class="glass login-card reveal" novalidate autocomplete="on">
+    <div class="logo-wrap"><img class="logo" src="assets/logo-light.png" alt="شعار جامعة اللوتس"></div>
+    <h1>لوحة تحكم رعاية الشباب</h1>
+    <p class="sub">أدخل كلمة المرور المشفرة للوصول إلى مركز البيانات والتقارير</p>
+    <div class="field" style="margin-top:20px">
+      <label class="lbl" for="pass">كلمة المرور الرئيسية</label>
+      <div class="pass-input-wrap">
+        <input id="pass" type="password" dir="ltr" placeholder="••••••••" autocomplete="current-password" autofocus required>
+        <span class="pass-icon">🔒</span>
+      </div>
+    </div>
+    <span class="err" id="loginErr" style="margin:12px 0"></span>
+    <button class="btn btn-gold-shine" id="loginBtn" type="submit" style="width:100%">دخول اللوحة الإدارية ←</button>
+  </form>
+</main>
+
+<!-- ============ لوحة التحكم الرئيسية ============ -->
+<div id="app" hidden>
+  <!-- الهيدر العلوي الفاخر -->
+  <header class="top-nav glass">
+    <div class="nav-brand">
+      <img src="assets/logo-light.png" alt="شعار جامعة اللوتس" class="nav-logo">
+      <div class="brand-text">
+        <h2>جامعة اللوتس <span class="gold-badge">رعاية الشباب</span></h2>
+        <p class="nav-status"><span class="pulse-dot"></span> متصل بقاعدة البيانات المباشرة • <b>student-3346e</b></p>
+      </div>
+    </div>
+
+    <!-- تبيويبات الملاحة السريعة -->
+    <nav class="nav-tabs">
+      <button class="tab-btn active" data-tab="overview"><span class="tab-icon">📊</span> الإحصائيات العامة</button>
+      <button class="tab-btn" data-tab="records"><span class="tab-icon">📄</span> سجلات الطلاب (<span id="totalBadgeCount">0</span>)</button>
+      <button class="tab-btn" data-tab="analytics"><span class="tab-icon">📈</span> التحليلات المتقدمة</button>
+      <button class="tab-btn" data-tab="reports"><span class="tab-icon">🖨</span> التقارير والطباعه</button>
+    </nav>
+
+    <div class="nav-actions">
+      <button class="btn sm ghost" id="btnXlsx" type="button">📊 Excel</button>
+      <button class="btn sm danger-ghost" id="btnOut" type="button">خروج 🚪</button>
+    </div>
+  </header>
+
+  <!-- محتوى اللوحة -->
+  <main class="dash-body">
+
+    <!-- 1. تبويب الإحصائيات العامة -->
+    <div class="tab-pane active" id="pane-overview">
+      <!-- كروت المؤشرات الكبيرة التفاعلية KPI Cards -->
+      <section class="kpi-grid">
+        <div class="kpi-card kpi-total" id="kpiTotal" role="button" tabindex="0" title="اضغط لعرض التفاصيل والتصدير والطباعة">
+          <div class="kpi-head">
+            <span class="kpi-title">إجمالي الطلاب المسجلين</span>
+            <span class="kpi-icon">🎓</span>
+          </div>
+          <div class="kpi-value" id="valTotal">0</div>
+          <div class="kpi-foot"><span class="kpi-trend" id="pctTotal">0 طالب</span> اضغط للتفاصيل والتصدير 🔍</div>
+        </div>
+
+        <div class="kpi-card kpi-teal" id="kpiSport" role="button" tabindex="0" title="اضغط لعرض التفاصيل والتصدير والطباعة">
+          <div class="kpi-head">
+            <span class="kpi-title">النشاط الرياضي</span>
+            <span class="kpi-icon">⚽</span>
+          </div>
+          <div class="kpi-value" id="valSport">0</div>
+          <div class="kpi-foot"><span class="kpi-trend" id="pctSport">0 طالب</span> اضغط للتفاصيل والتصدير 🔍</div>
+        </div>
+
+        <div class="kpi-card kpi-purple" id="kpiArt" role="button" tabindex="0" title="اضغط لعرض التفاصيل والتصدير والطباعة">
+          <div class="kpi-head">
+            <span class="kpi-title">النشاط الفني</span>
+            <span class="kpi-icon">🎨</span>
+          </div>
+          <div class="kpi-value" id="valArt">0</div>
+          <div class="kpi-foot"><span class="kpi-trend" id="pctArt">0 طالب</span> اضغط للتفاصيل والتصدير 🔍</div>
+        </div>
+
+        <div class="kpi-card kpi-blue" id="kpiCulture" role="button" tabindex="0" title="اضغط لعرض التفاصيل والتصدير والطباعة">
+          <div class="kpi-head">
+            <span class="kpi-title">النشاط الثقافي</span>
+            <span class="kpi-icon">📚</span>
+          </div>
+          <div class="kpi-value" id="valCulture">0</div>
+          <div class="kpi-foot"><span class="kpi-trend" id="pctCulture">0 طالب</span> اضغط للتفاصيل والتصدير 🔍</div>
+        </div>
+
+        <div class="kpi-card kpi-orange" id="kpiSocial" role="button" tabindex="0" title="اضغط لعرض التفاصيل والتصدير والطباعة">
+          <div class="kpi-head">
+            <span class="kpi-title">النشاط الاجتماعي</span>
+            <span class="kpi-icon">🤝</span>
+          </div>
+          <div class="kpi-value" id="valSocial">0</div>
+          <div class="kpi-foot"><span class="kpi-trend" id="pctSocial">0 طالب</span> اضغط للتفاصيل والتصدير 🔍</div>
+        </div>
+      </section>
+
+      <!-- شبكة الرسوم البيانية الرئيسية -->
+      <section class="charts-row">
+        <!-- دونات الأنشطة -->
+        <div class="glass chart-card">
+          <div class="chart-header">
+            <h4><span class="dot-accent gold"></span> أعداد المشاركين في الأنشطة</h4>
+            <span class="chart-tag">مخطط دائرى</span>
+          </div>
+          <div id="chDonut" class="donut-container"></div>
+        </div>
+
+        <!-- أكثر الكليات مشاركة -->
+        <div class="glass chart-card">
+          <div class="chart-header">
+            <h4><span class="dot-accent teal"></span> الكليات الأكثر تفاعلاً</h4>
+            <span class="chart-tag">ترتيب الكليات</span>
+          </div>
+          <div id="chColleges" class="bars-container"></div>
+        </div>
+
+        <!-- أكثر المحافظات -->
+        <div class="glass chart-card">
+          <div class="chart-header">
+            <h4><span class="dot-accent purple"></span> توزيع المحافظات</h4>
+            <span class="chart-tag">التوزيع الجغرافي</span>
+          </div>
+          <div id="chGov" class="bars-container"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 2. تبويب سجلات الطلاب والجدول -->
+    <div class="tab-pane" id="pane-records">
+      <section class="glass table-section">
+        <div class="table-header-bar">
+          <div>
+            <h3>سجلات الطلاب <span class="count-pill" id="countPill">0 طالب</span></h3>
+            <p class="section-desc">ابحث، فلتر، عدّل أو احذف أي سجل بسهولة</p>
+          </div>
+          <div class="quick-table-actions">
+            <button class="btn sm btn-gold-shine" id="btnPrintList" type="button">🖨 طباعة الكشف الحالي</button>
+          </div>
+        </div>
+
+        <!-- شريط الفلاتر الشامل -->
+        <div class="filter-bar">
+          <div class="search-box">
+            <span class="search-icon">🔍</span>
+            <input class="input-styled" id="q" type="search" placeholder="بحث باسم الطالب، الكود، المحافظة، الكلية، الموبايل أو الهواية…">
+          </div>
+          <div class="filter-selects">
+            <select class="input-styled" id="fAct"></select>
+            <select class="input-styled" id="fCol"></select>
+            <select class="input-styled" id="fGov"></select>
+            <button class="btn sm ghost" id="fReset" type="button">↺ إعادة ضبط</button>
+          </div>
+        </div>
+
+        <!-- جدول البيانات الفاخر -->
+        <div class="tbl-responsive">
+          <table class="data-table" id="tbl">
+            <thead>
+              <tr>
+                <th>#</th>
+                <th>الطالب</th>
+                <th>كود الطالب</th>
+                <th>الكلية</th>
+                <th>المحافظة</th>
+                <th>رقم الموبايل</th>
+                <th>الأنشطة المشترك بها</th>
+                <th>نوع النشاط / الهواية</th>
+                <th>تاريخ التسجيل</th>
+                <th>إجراءات</th>
+              </tr>
+            </thead>
+            <tbody></tbody>
+          </table>
+        </div>
+        <div class="pagination-bar">
+          <span class="page-info" id="pageInfo">عرض النتائج</span>
+          <button class="btn sm ghost" id="more" type="button" hidden>عرض المزيد من السجلات ↓</button>
+        </div>
+      </section>
+    </div>
+
+    <!-- 3. تبويب التحليلات المتقدمة -->
+    <div class="tab-pane" id="pane-analytics">
+      <section class="charts-row">
+        <!-- الأكثر تكراراً في نوع النشاط -->
+        <div class="glass chart-card wide">
+          <div class="chart-header">
+            <h4><span class="dot-accent gold"></span> أبرز الهوايات والأنشطة المكتوبة</h4>
+            <span class="chart-tag">تحليل وقواعد البيانات</span>
+          </div>
+          <div class="hobby-search-wrap" style="margin-bottom:16px;position:relative">
+            <span class="search-icon" style="position:absolute;right:14px;top:50%;transform:translateY(-50%);opacity:0.6">🔍</span>
+            <input class="input-styled" id="qHobby" type="search" placeholder="ابحث بأي حرف أو جزء من الكلمة (مثل: رسم، قدم، قراءة، شعر)…" style="padding-right:38px;height:40px;font-size:0.86rem">
+          </div>
+          <div id="chHobby" class="bars-container"></div>
+        </div>
+      </section>
+    </div>
+
+    <!-- 4. تبويب مركز التقارير والطباعة A4 -->
+    <div class="tab-pane" id="pane-reports">
+      <section class="glass reports-center">
+        <div class="reports-hero">
+          <div class="reports-icon">📜</div>
+          <div>
+            <h3>التقارير والطباعه</h3>
+            <p>تصدير تقارير رسمية منسقة بدقة عالية باسم جامعة اللوتس وإدارة رعاية الشباب جاهزة للطباعة أو الحفظ بصيغة PDF.</p>
+          </div>
+        </div>
+
+        <div class="reports-grid">
+          <div class="report-card">
+            <div class="rc-icon">📊</div>
+            <h4>تقرير الإحصائيات الشامل</h4>
+            <p>يتضمن مؤشرات الأنشطة، وتوزيع الكليات والمحافظات، وأكثر الهوايات تكراراً مع أعداد المشاركين الرسمية.</p>
+            <button class="btn btn-gold-shine" id="btnPrintStats" type="button">🖨 طباعة التقرير الإحصائي A4</button>
+          </div>
+
+          <div class="report-card">
+            <div class="rc-icon">🎓</div>
+            <h4>كشف الطلاب المسجلين</h4>
+            <p>طباعة جدول كشف الطلاب الحالي حسب الفلاتر المحددة بالهيدر والتذييل الرسمي وتنسيق أفقي A4.</p>
+            <button class="btn ghost" id="btnPrintListDirect" type="button">🖨 طباعة كشف الطلاب A4</button>
+          </div>
+
+          <div class="report-card">
+            <div class="rc-icon">📁</div>
+            <h4>تصدير قاعدة البيانات Excel</h4>
+            <p>تنزيل ملف بيانات مصنف بجميع الحقول (الاسم، الكود، المحافظة، الكلية، الموبايل، والأنشطة).</p>
+            <div class="btn-group">
+              <button class="btn btn-gold-shine" id="btnXlsx2" type="button">⬇ تصدير ملف Excel (.xlsx)</button>
+            </div>
+          </div>
+        </div>
+      </section>
+    </div>
+
+  </main>
+</div>
+
+<!-- ============ نافذة التفاصيل والمودال ============ -->
+<div class="modal" id="modal" hidden>
+  <div class="glass sheet" role="dialog" aria-modal="true">
+    <div class="sheet-head">
+      <button class="btn sm ghost" id="mBack" type="button" hidden>← رجوع</button>
+      <h3 id="mTitle"></h3>
+      <div class="sheet-tools">
+        <button class="btn sm ghost" id="mXlsx" type="button">⬇ Excel</button>
+        <button class="btn sm btn-gold-shine" id="mPrint" type="button">🖨 طباعة A4</button>
+        <button class="btn sm ghost" id="mClose" type="button" aria-label="إغلاق">✕</button>
+      </div>
+    </div>
+    <div class="sheet-body" id="mBody"></div>
+  </div>
+</div>
+
+<div id="printArea" aria-hidden="true"></div>
+
+<!-- التذييل الرسمي المميز -->
+<footer class="credit no-print">
+  <div class="credit-pill">
+    <span class="ic">&lt;/&gt;</span>
+    <span>تصميم وتطوير <b>مهندس بولس سمير</b></span>
+  </div>
+</footer>
+
+<script src="js/guard.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="js/export.js"></script>
+<script src="js/admin.js"></script>
+</body>
+</html>

@@ -1,0 +1,101 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<title>تسجيل الأنشطة الطلابية | جامعة اللوتس</title>
+<meta name="robots" content="noindex,nofollow">
+<meta name="referrer" content="no-referrer">
+<meta name="theme-color" content="#060a18">
+<meta http-equiv="Content-Security-Policy" content="default-src 'self' 'unsafe-inline' https: wss: data: blob:;">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cairo:wght@400;600;700;800&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="css/style.css">
+<link rel="stylesheet" href="css/student.css">
+</head>
+<body>
+<canvas id="bg"></canvas>
+<div id="toasts" role="status" aria-live="polite"></div>
+
+<main class="wrap">
+  <section class="hero reveal">
+    <div class="logo-wrap"><img class="logo" src="assets/logo-light.png" alt="شعار جامعة اللوتس"></div>
+    <h1>رعاية الشباب</h1>
+    <p class="sub">نموذج تسجيل الأنشطة الطلابية</p>
+  </section>
+
+  <form id="form" class="glass card reveal" style="animation-delay:.15s" novalidate autocomplete="off">
+    <div class="grid">
+      <div class="field full" data-f="name">
+        <label class="lbl" for="name">الاسم رباعي</label>
+        <input id="name" type="text" maxlength="100" placeholder="اكتب الاسم رباعي" autocomplete="off">
+        <span class="err"></span>
+      </div>
+
+      <div class="field" data-f="code">
+        <label class="lbl" for="code">كود الطالب</label>
+        <input id="code" type="text" maxlength="20" inputmode="numeric" dir="ltr" placeholder="مثال: 2024001" autocomplete="off">
+        <span class="err"></span>
+      </div>
+
+      <div class="field" data-f="phone">
+        <label class="lbl" for="phone">رقم الموبايل</label>
+        <input id="phone" type="tel" maxlength="11" inputmode="numeric" dir="ltr" placeholder="01XXXXXXXXX" autocomplete="off">
+        <span class="err"></span>
+      </div>
+
+      <div class="field" data-f="college">
+        <label class="lbl" for="college">الكلية</label>
+        <select id="college"></select>
+        <span class="err"></span>
+      </div>
+
+      <div class="field" data-f="governorate">
+        <label class="lbl" for="governorate">المحافظة</label>
+        <select id="governorate"></select>
+        <span class="err"></span>
+      </div>
+    </div>
+
+    <fieldset class="acts" data-f="activities">
+      <legend class="lbl">الأنشطة التي ترغب في المشاركة بها <small style="color:var(--gold);font-weight:normal">(يمكن اختيار أكثر من نشاط)</small></legend>
+      <div class="act-grid" id="actGrid"></div>
+      <span class="err"></span>
+    </fieldset>
+
+    <div class="field" data-f="detail">
+      <label class="lbl" for="detail">نوع النشاط / الهواية</label>
+      <input id="detail" type="text" maxlength="200" placeholder="اكتب أنشطتك مفصولة بـ - (مثال: الرسم - كرة القدم - القراءة)" autocomplete="off">
+      <span class="err"></span>
+    </div>
+
+    <!-- honeypot -->
+    <div class="hp" aria-hidden="true"><input id="website" type="text" tabindex="-1" autocomplete="off"></div>
+
+    <button class="btn submit" id="submit" type="submit"><span>تسجيل</span></button>
+  </form>
+</main>
+
+<div class="success" id="success" hidden>
+  <div class="glass box">
+    <svg viewBox="0 0 52 52" class="check"><circle cx="26" cy="26" r="24"/><path d="M14 27l8 8 16-17"/></svg>
+    <h2>تم التسجيل بنجاح</h2>
+    <p>شكرًا لك، تم حفظ بياناتك وسيتم التواصل معك من إدارة رعاية الشباب.</p>
+    <button class="btn" id="again" type="button">تسجيل طالب آخر</button>
+  </div>
+</div>
+
+<footer class="credit">
+  <div class="credit-pill">
+    <span class="ic">&lt;/&gt;</span>
+    <span>تصميم وتطوير <b>مهندس بولس سمير</b></span>
+  </div>
+</footer>
+
+<script src="js/guard.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-app.js"></script>
+<script src="https://www.gstatic.com/firebasejs/8.10.1/firebase-database.js"></script>
+<script src="js/student.js"></script>
+</body>
+</html>
